@@ -43,12 +43,31 @@ function initNav() {
   const header = document.querySelector("[data-header]");
   if (!toggle || !nav || !header) return;
 
+  const label = toggle.querySelector(".visually-hidden");
+
   const setOpen = (open, returnFocus) => {
     toggle.setAttribute("aria-expanded", String(open));
+    if (label) label.textContent = open ? "Close menu" : "Menu";
     nav.classList.toggle("is-open", open);
     header.classList.toggle("is-open", open);
+    root.classList.toggle("nav-open", open);
     if (!open && returnFocus) toggle.focus();
   };
+
+  // While the full-screen menu is open, keep Tab inside the header and menu.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab" || !nav.classList.contains("is-open")) return;
+    const items = Array.from(header.querySelectorAll("a[href], button")).filter((el) => el.getClientRects().length);
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 
   toggle.addEventListener("click", () => {
     setOpen(toggle.getAttribute("aria-expanded") !== "true", false);
@@ -69,6 +88,94 @@ function initNav() {
   window.matchMedia("(min-width: 900px)").addEventListener("change", (event) => {
     if (event.matches) setOpen(false, false);
   });
+}
+
+/* ---------- Page transition ---------- */
+// A short flight across the screen (about 0.8s with the fade) when moving between pages.
+function initPageTransitions() {
+  if (!("animate" in Element.prototype)) return;
+
+  const overlay = document.createElement("div");
+  overlay.className = "flight-transition";
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.innerHTML = '<div class="flight-transition__sky"></div>' +
+    '<svg class="flight-transition__trail" focusable="false"><path d=""></path></svg>' +
+    '<img class="flight-transition__plane" src="images/aerocrest-plane-reversed.png" width="312" height="143" alt="">';
+  document.body.appendChild(overlay);
+
+  const sky = overlay.querySelector(".flight-transition__sky");
+  const svg = overlay.querySelector("svg");
+  const trail = overlay.querySelector("path");
+  const plane = overlay.querySelector("img");
+  const canFollowPath = window.CSS && CSS.supports("offset-path", 'path("M0 0 L1 1")');
+  const DURATION = 600;
+  const EASING = "cubic-bezier(0.45, 0, 0.25, 1)";
+  let leaving = false;
+
+  const reset = () => {
+    overlay.getAnimations({ subtree: true }).forEach((animation) => animation.cancel());
+    overlay.classList.remove("is-active");
+    leaving = false;
+  };
+
+  function fly(done) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const d = "M" + -0.18 * w + " " + 0.68 * h + " C" + 0.3 * w + " " + 0.72 * h + " " + 0.62 * w + " " + 0.52 * h + " " + 1.25 * w + " " + 0.3 * h;
+    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+    trail.setAttribute("d", d);
+    const length = trail.getTotalLength();
+    trail.style.strokeDasharray = length + " " + length;
+    overlay.classList.add("is-active");
+
+    sky.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: "ease-out", fill: "forwards" });
+    trail.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], { duration: DURATION, easing: EASING, fill: "forwards" });
+    if (canFollowPath) {
+      plane.style.offsetPath = 'path("' + d + '")';
+      plane.animate([{ offsetDistance: "0%" }, { offsetDistance: "100%" }], { duration: DURATION, easing: EASING, fill: "forwards" });
+    } else {
+      plane.animate([
+        { transform: "translate(" + -0.2 * w + "px, " + 0.62 * h + "px) rotate(-10deg)" },
+        { transform: "translate(" + 1.2 * w + "px, " + 0.26 * h + "px) rotate(-10deg)" }
+      ], { duration: DURATION, easing: EASING, fill: "forwards" });
+    }
+    window.setTimeout(done, DURATION - 20);
+  }
+
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest("a[href]");
+    if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || !/(\.html|\/)$/.test(url.pathname)) return;
+    if (url.pathname === window.location.pathname || reducedMotion.matches || leaving) return;
+    event.preventDefault();
+    leaving = true;
+    fly(() => window.location.assign(url.href));
+  });
+
+  // Coming back with the Back button can restore this page from memory, overlay and all.
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) reset();
+  });
+
+  // Start fetching a page as soon as someone reaches for its link.
+  const prefetched = new Set();
+  const prefetch = (event) => {
+    const link = event.target.closest && event.target.closest("a[href]");
+    if (!link) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || url.pathname === window.location.pathname || prefetched.has(url.pathname)) return;
+    if (!/\.html$/.test(url.pathname)) return;
+    prefetched.add(url.pathname);
+    const hint = document.createElement("link");
+    hint.rel = "prefetch";
+    hint.href = url.pathname.split("/").pop();
+    document.head.appendChild(hint);
+  };
+  document.addEventListener("pointerover", prefetch, { passive: true });
+  document.addEventListener("touchstart", prefetch, { passive: true });
+  document.addEventListener("focusin", prefetch);
 }
 
 /* ---------- Header scroll state ---------- */
@@ -583,6 +690,7 @@ function initRequestForm() {
 }
 
 initNav();
+initPageTransitions();
 initHeader();
 initAnchors();
 initReveal();

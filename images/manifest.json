@@ -305,7 +305,8 @@
       "aerocrest-logo-lockup.png / .webp (trimmed full lockup, footer)",
       "aerocrest-mark.png / .webp (A mark and aircraft, header)",
       "aerocrest-wordmark.png / .webp (AEROCREST wordmark, header)",
-      "favicon.ico, favicon-32.png, favicon-512.png, apple-touch-icon.png (A mark and swoosh only)"
+      "favicon.ico, favicon-32.png, favicon-512.png, apple-touch-icon.png (A mark and swoosh only)",
+      "aerocrest-plane-reversed.png / .webp: the logo's aircraft on its own, in white. Used by the page-to-page flight transition."
     ],
     "source": "Supplied by the client",
     "placeholder": false

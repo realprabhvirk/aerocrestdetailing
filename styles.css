@@ -271,6 +271,10 @@ main:focus { outline: none; }
 
 .header-call,
 .nav-toggle { display: none; }
+.site-nav__home,
+.site-nav__meta { display: none; }
+html.nav-open,
+html.nav-open body { overflow: hidden; }
 
 @media (max-width: 899px) {
   :root { --header-h: 60px; }
@@ -318,27 +322,109 @@ main:focus { outline: none; }
   html:not(.js) .site-nav { width: 100%; padding: 12px 0 16px; }
   html:not(.js) .site-nav__list { flex-wrap: wrap; gap: 12px 20px; }
 
+  /* Full-screen menu that opens as a circle growing out of the menu button. */
   .js .site-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    display: none;
-    padding: 28px var(--gutter) 32px;
+    --menu-origin: calc(100% - var(--gutter) - 22px) calc(var(--header-h) / 2);
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: calc(var(--header-h) + clamp(28px, 6vh, 56px)) var(--gutter) max(28px, env(safe-area-inset-bottom));
     background: var(--ramp-navy);
-    border-top: 1px solid rgba(220, 230, 242, 0.12);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    visibility: hidden;
+    clip-path: circle(0 at var(--menu-origin));
+    transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s linear 0.5s;
   }
-  .js .site-nav.is-open { display: block; }
-  .js .site-nav__list { flex-direction: column; align-items: stretch; gap: 4px; }
-  .js .site-nav a:not(.btn) {
+  .js .site-nav.is-open {
+    visibility: visible;
+    clip-path: circle(150vmax at var(--menu-origin));
+    transition: clip-path 0.6s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s;
+  }
+  /* A faint swoosh across the open menu, echoing the logo. */
+  .js .site-nav::before {
+    content: "";
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    bottom: -4%;
+    height: 30vh;
+    border-top: 2px solid var(--swoosh-lift);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    opacity: 0.22;
+    transform: rotate(-9deg);
+    pointer-events: none;
+  }
+  .js .site-nav__list { position: relative; flex-direction: column; align-items: stretch; gap: 0; }
+  .js .site-nav__list > li,
+  .js .site-nav__meta {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .js .site-nav.is-open .site-nav__list > li,
+  .js .site-nav.is-open .site-nav__meta {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.45s var(--ease), transform 0.55s var(--ease);
+  }
+  .js .site-nav.is-open .site-nav__list > li:nth-child(1) { transition-delay: 0.16s; }
+  .js .site-nav.is-open .site-nav__list > li:nth-child(2) { transition-delay: 0.21s; }
+  .js .site-nav.is-open .site-nav__list > li:nth-child(3) { transition-delay: 0.26s; }
+  .js .site-nav.is-open .site-nav__list > li:nth-child(4) { transition-delay: 0.31s; }
+  .js .site-nav.is-open .site-nav__list > li:nth-child(5) { transition-delay: 0.36s; }
+  .js .site-nav.is-open .site-nav__meta { transition-delay: 0.42s; }
+  .js .site-nav__list a:not(.btn) {
     display: block;
-    padding: 12px 0;
+    padding: 14px 0;
     font-family: var(--font-display);
     font-stretch: var(--wide);
-    font-size: 1.25rem;
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
     border-bottom: 1px solid rgba(220, 230, 242, 0.14);
   }
-  .js .site-nav .btn { margin-top: 18px; width: 100%; min-height: 52px; }
+  .js .site-nav__list a[aria-current="page"]:not(.btn) { color: var(--swoosh-lift); border-bottom-color: rgba(220, 230, 242, 0.14); }
+  .js .site-nav__list a.site-nav__phone {
+    padding: 20px 0;
+    font-family: var(--font-mono);
+    font-stretch: normal;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    border-bottom: 0;
+  }
+  .js .site-nav .btn { margin-top: 8px; width: 100%; min-height: 56px; font-size: 0.9375rem; }
+  .js .site-nav__home { display: block; }
+  .js .site-nav__meta {
+    display: block;
+    position: relative;
+    margin-top: auto;
+    padding-top: 32px;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-dark-muted);
+  }
+  .js .site-nav__meta p { margin-bottom: 8px; }
+  .js .site-nav__meta a {
+    color: var(--on-dark);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    overflow-wrap: anywhere;
+  }
 }
 
 /* ---------- Flight path (home) ---------- */
@@ -1133,8 +1219,40 @@ main.has-flight { overflow: hidden; overflow: clip; }
 .form-status a { font-weight: 600; }
 .form-status strong { display: block; margin-bottom: 4px; font-family: var(--font-display); font-stretch: var(--wide); font-size: 1.125rem; }
 
+/* ---------- Page transition: the logo's aircraft flies across between pages ---------- */
+.flight-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+}
+.flight-transition.is-active { visibility: visible; pointer-events: auto; }
+.flight-transition__sky { position: absolute; inset: 0; background: var(--ramp-navy); opacity: 0; }
+.flight-transition__trail { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.flight-transition__trail path {
+  fill: none;
+  stroke: var(--swoosh-lift);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.flight-transition__plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(96px, 15vw, 176px);
+  height: auto;
+  offset-anchor: 12% 64%;
+  offset-rotate: auto 10deg;
+}
+
 /* ---------- Motion ---------- */
 @media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 0.22s; }
+
   .hero__media img { animation: hero-settle 14s var(--ease) both; }
   @keyframes hero-settle {
     from { transform: scale(1.06); }
