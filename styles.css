@@ -1241,7 +1241,7 @@ main.has-flight { overflow: hidden; overflow: clip; }
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(96px, 15vw, 176px);
+  width: clamp(128px, 20vw, 240px);
   height: auto;
   offset-anchor: 12% 64%;
   offset-rotate: auto 10deg;
@@ -1251,7 +1251,7 @@ main.has-flight { overflow: hidden; overflow: clip; }
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
   ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.22s; }
+  ::view-transition-new(root) { animation-duration: 0.25s; }
 
   .hero__media img { animation: hero-settle 14s var(--ease) both; }
   @keyframes hero-settle {

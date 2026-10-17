@@ -91,7 +91,8 @@ function initNav() {
 }
 
 /* ---------- Page transition ---------- */
-// A short flight across the screen (about 0.8s with the fade) when moving between pages.
+// A short flight across the screen (about 1.4s with the fade) when moving between pages.
+// The aircraft slows as it crosses the middle so it reads clearly, then exits.
 function initPageTransitions() {
   if (!("animate" in Element.prototype)) return;
 
@@ -108,8 +109,11 @@ function initPageTransitions() {
   const trail = overlay.querySelector("path");
   const plane = overlay.querySelector("img");
   const canFollowPath = window.CSS && CSS.supports("offset-path", 'path("M0 0 L1 1")');
-  const DURATION = 600;
-  const EASING = "cubic-bezier(0.45, 0, 0.25, 1)";
+  const DURATION = 1200;
+  // Quick in, a slow glide through the middle of the screen, quick out.
+  const GLIDE = [0, 0.36, 0.64, 1];
+  const STEPS = [0, 0.22, 0.78, 1];
+  const glide = (from, to) => GLIDE.map((at, i) => ({ offset: STEPS[i], value: from + (to - from) * at }));
   let leaving = false;
 
   const reset = () => {
@@ -121,7 +125,10 @@ function initPageTransitions() {
   function fly(done) {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    const d = "M" + -0.18 * w + " " + 0.68 * h + " C" + 0.3 * w + " " + 0.72 * h + " " + 0.62 * w + " " + 0.52 * h + " " + 1.25 * w + " " + 0.3 * h;
+    // Climb in proportion to the width, so the angle stays gentle on tall phone screens too.
+    const y0 = 0.62 * h;
+    const rise = Math.min(0.34 * h, 0.3 * w);
+    const d = "M" + -0.12 * w + " " + y0 + " C" + 0.3 * w + " " + (y0 + rise * 0.12) + " " + 0.62 * w + " " + (y0 - rise * 0.4) + " " + 1.16 * w + " " + (y0 - rise);
     svg.setAttribute("viewBox", "0 0 " + w + " " + h);
     trail.setAttribute("d", d);
     const length = trail.getTotalLength();
@@ -129,15 +136,16 @@ function initPageTransitions() {
     overlay.classList.add("is-active");
 
     sky.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: "ease-out", fill: "forwards" });
-    trail.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], { duration: DURATION, easing: EASING, fill: "forwards" });
+    const timing = { duration: DURATION, easing: "linear", fill: "forwards" };
+    trail.animate(glide(length, 0).map((k) => ({ offset: k.offset, strokeDashoffset: k.value })), timing);
     if (canFollowPath) {
       plane.style.offsetPath = 'path("' + d + '")';
-      plane.animate([{ offsetDistance: "0%" }, { offsetDistance: "100%" }], { duration: DURATION, easing: EASING, fill: "forwards" });
+      plane.animate(glide(0, 100).map((k) => ({ offset: k.offset, offsetDistance: k.value + "%" })), timing);
     } else {
-      plane.animate([
-        { transform: "translate(" + -0.2 * w + "px, " + 0.62 * h + "px) rotate(-10deg)" },
-        { transform: "translate(" + 1.2 * w + "px, " + 0.26 * h + "px) rotate(-10deg)" }
-      ], { duration: DURATION, easing: EASING, fill: "forwards" });
+      plane.animate(glide(0, 1).map((k) => ({
+        offset: k.offset,
+        transform: "translate(" + (-0.2 + 1.4 * k.value) * w + "px, " + (y0 - rise * k.value) + "px) rotate(-10deg)"
+      })), timing);
     }
     window.setTimeout(done, DURATION - 20);
   }
