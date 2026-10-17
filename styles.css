@@ -16,7 +16,7 @@
   --on-dark: #FFFFFF;
   --on-dark-muted: #B9C8DC;/* Sky haze dimmed for secondary text on navy. 10.8:1. */
   --swoosh-lift: #7FA6D9;  /* Swoosh blue lifted so the flight path still reads over navy. */
-  --plate: #FFFFFF;        /* The logo is supplied on white, so it sits on a white plate. */
+  --plate: #FFFFFF;        /* Card and form surfaces. */
 
   /* Type */
   --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
@@ -243,19 +243,17 @@ main:focus { outline: none; }
   padding-inline: var(--gutter);
 }
 
-/* The logo is supplied on white, so it hangs from the top edge on its own white plate. */
+/* Reversed logo (white and lifted blue), cut from the original file, straight on the dark header. */
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: calc(var(--header-h) + 6px);
-  padding: 10px 14px 8px;
-  background: var(--plate);
-  border-radius: 0 0 var(--radius) var(--radius);
-  box-shadow: 0 6px 18px rgba(1, 21, 46, 0.18);
+  gap: 12px;
+  align-self: center;
+  padding: 6px 0;
+  text-decoration: none;
 }
-.brand__mark { width: auto; height: 38px; }
-.brand__word { width: auto; height: 13px; }
+.brand__mark { width: auto; height: 40px; }
+.brand__word { width: auto; height: 15px; }
 
 .site-nav { margin-left: auto; align-self: center; }
 .site-nav__list { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 34px); }
@@ -276,9 +274,9 @@ main:focus { outline: none; }
 
 @media (max-width: 899px) {
   :root { --header-h: 60px; }
-  .brand { padding: 8px 12px 7px; gap: 8px; }
+  .brand { gap: 9px; }
   .brand__mark { height: 32px; }
-  .brand__word { height: 11px; }
+  .brand__word { height: 12px; }
 
   .header-call,
   .nav-toggle {
@@ -383,39 +381,43 @@ main { position: relative; display: block; }
 .flight-land { display: block; height: 72px; }
 
 /* ---------- Hero ---------- */
+/* The photo is a band across the top that fades into the navy ramp, so the
+   headline sits below the aircraft at every screen shape. */
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   min-height: 100vh;
   min-height: 100svh;
-  padding-top: calc(var(--header-h) + 48px);
   background: var(--ramp-navy);
   color: var(--on-dark);
   overflow: hidden;
   isolation: isolate;
 }
 .hero__media {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+  position: relative;
+  height: clamp(380px, 64svh, 780px);
+  overflow: hidden;
 }
 .hero__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 42% 45%;
+  object-position: 42% 56%;
 }
 .hero__media::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, rgba(1, 21, 46, 0.94) 0%, rgba(1, 21, 46, 0.72) 30%, rgba(1, 21, 46, 0) 58%),
-    linear-gradient(to bottom, rgba(1, 21, 46, 0.55) 0%, rgba(1, 21, 46, 0) 22%);
+    linear-gradient(to top, var(--ramp-navy) 0%, rgba(1, 21, 46, 0.6) 22%, rgba(1, 21, 46, 0) 48%),
+    linear-gradient(to bottom, rgba(1, 21, 46, 0.7) 0%, rgba(1, 21, 46, 0) 26%);
 }
-.hero__content { position: relative; padding-bottom: 28px; }
+.hero__content {
+  position: relative;
+  margin-top: clamp(-140px, -11svh, -84px);
+  padding-bottom: 28px;
+}
 .hero__title {
   font-size: var(--step-hero);
   font-weight: 800;
@@ -424,24 +426,17 @@ main { position: relative; display: block; }
   letter-spacing: -0.01em;
 }
 .hero__lede {
-  max-width: 34em;
+  max-width: 44em;
   margin-bottom: 30px;
   font-size: var(--step-1);
   line-height: 1.5;
   color: #E7EDF5;
 }
-.hero__placard { padding-bottom: 26px; }
+.hero__placard { margin-top: auto; padding-bottom: 26px; }
 
 @media (max-width: 699px) {
-  .hero { justify-content: flex-start; padding-top: 0; }
-  .hero__media { position: relative; inset: auto; height: 58svh; min-height: 320px; z-index: 0; }
+  .hero__media { height: 58svh; min-height: 320px; }
   .hero__media img { object-position: 32% 50%; }
-  .hero__media::after {
-    background:
-      linear-gradient(to top, var(--ramp-navy) 0%, rgba(1, 21, 46, 0.5) 30%, rgba(1, 21, 46, 0) 55%),
-      linear-gradient(to bottom, rgba(1, 21, 46, 0.6) 0%, rgba(1, 21, 46, 0) 30%);
-  }
-  .hero__content { margin-top: -84px; padding-bottom: 24px; }
   .hero .button-row .btn { flex: 1 1 100%; }
 }
 
@@ -749,13 +744,8 @@ main { position: relative; display: block; }
   grid-template-columns: 1.3fr 1fr 0.8fr 1fr;
   gap: 40px 32px;
 }
-.logo-plate {
-  width: 220px;
-  padding: 14px 18px;
-  background: var(--plate);
-  border-radius: var(--radius);
-}
-.logo-plate img { width: 100%; }
+.footer-logo { width: 190px; }
+.footer-logo img { width: 100%; }
 .site-footer__tag {
   margin-top: 18px;
   font-family: var(--font-display);

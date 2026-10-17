@@ -175,6 +175,7 @@
     "files": [
       "aerocrest-logo.png (original, unaltered)",
       "aerocrest-logo-transparent.png / .webp (white background removed)",
+      "aerocrest-mark-reversed, aerocrest-wordmark-reversed, aerocrest-logo-lockup-reversed (.png / .webp): navy mapped to white and the blue to a lighter blue, for dark backgrounds. Used in the header and footer.",
       "aerocrest-logo-lockup.png / .webp (trimmed full lockup, footer)",
       "aerocrest-mark.png / .webp (A mark and aircraft, header)",
       "aerocrest-wordmark.png / .webp (AEROCREST wordmark, header)",

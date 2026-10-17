@@ -21,4 +21,4 @@ The Pexels License allows free commercial use and modification, with no attribut
 
 ## Logo
 
-`aerocrest-logo.png` is the client's original file, untouched. Every other logo and favicon file is cut from it pixel for pixel: the white background removed or the artwork cropped, never redrawn or recolored.
+`aerocrest-logo.png` is the client's original file, untouched. Every other logo and favicon file is cut from it pixel for pixel: the white background removed or the artwork cropped, never redrawn. The `-reversed` files are the same artwork with the navy mapped to white and the blue lightened, so the logo reads on the navy header and footer. They were made at the client's request.

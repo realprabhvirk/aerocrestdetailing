@@ -14,4 +14,4 @@ Sizes used: the hero JPG is 2400 px wide, every other JPG is 1600 px wide.
 
 The slot for a portrait of William is on `about.html`, marked with a `PORTRAIT SLOT` comment. It currently uses `cockpit-instrument-panel-single-engine.jpg`.
 
-Logo files are cut from the original `aerocrest-logo.png`. Don't edit or redraw them.
+Logo files are cut from the original `aerocrest-logo.png`. The `-reversed` versions (white) are what the header and footer use on navy. Don't redraw them.
