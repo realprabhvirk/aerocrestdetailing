@@ -965,7 +965,7 @@ main { position: relative; display: block; }
   gap: clamp(36px, 5vw, 80px);
   align-items: start;
 }
-.request__aside { position: sticky; top: calc(var(--header-h) + 32px); }
+.request__aside { min-width: 0; }
 .request__aside h2 { font-size: var(--step-1); margin-bottom: 18px; }
 .mini-steps { counter-reset: step; margin-bottom: 32px; }
 .mini-steps li {
@@ -988,6 +988,8 @@ main { position: relative; display: block; }
 .mini-steps strong { display: block; color: var(--ink); }
 .contact-lines { margin-bottom: 24px; }
 .request__aside .placard { margin-bottom: 20px; }
+.request__media { margin-top: 28px; border-radius: var(--radius); overflow: hidden; }
+.request__media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 .contact-lines li { margin-bottom: 6px; }
 .contact-lines a { font-weight: 600; overflow-wrap: anywhere; }
 .request__note {
@@ -999,7 +1001,8 @@ main { position: relative; display: block; }
 }
 @media (max-width: 899px) {
   .request__grid { grid-template-columns: 1fr; }
-  .request__aside { position: static; }
+
+  .request__media { display: none; }
 }
 
 .form-card {
@@ -1010,8 +1013,7 @@ main { position: relative; display: block; }
 }
 .form-section { margin: 0 0 36px; padding: 0; border: 0; min-width: 0; }
 .form-section__legend,
-.field label,
-.field__label {
+.field label {
   display: block;
   margin-bottom: 8px;
   padding: 0;

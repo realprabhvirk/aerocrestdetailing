@@ -1,0 +1,186 @@
+{
+  "note": "All photography is stand-in stock until the owner supplies his own. Every file below has .webp variants at 1600 and 800 px (the hero also at 2400 px).",
+  "images": [
+    {
+      "file": "hero-high-wing-single-engine-dusk-ramp.jpg",
+      "webp": [
+        "hero-high-wing-single-engine-dusk-ramp-1600.webp",
+        "hero-high-wing-single-engine-dusk-ramp-800.webp",
+        "hero-high-wing-single-engine-dusk-ramp-2400.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/11848893/",
+      "photographer": "Emmanuel Molina",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home hero; Open Graph image (og-aerocrest-detailing.jpg is a 1200 x 630 crop of it)",
+      "placeholder": true,
+      "notes": "Cropped. Tail registration blurred so it is not legible."
+    },
+    {
+      "file": "detail-wing-leading-edge-low-sun.jpg",
+      "webp": [
+        "detail-wing-leading-edge-low-sun-1600.webp",
+        "detail-wing-leading-edge-low-sun-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/2868251/",
+      "photographer": "Matheus Bertelli",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: Exterior wash & wax card. Services: Exterior wash & wax block",
+      "placeholder": true,
+      "notes": "Cropped to remove a registration and a website address."
+    },
+    {
+      "file": "detail-propeller-spinner-low-sun.jpg",
+      "webp": [
+        "detail-propeller-spinner-low-sun-1600.webp",
+        "detail-propeller-spinner-low-sun-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/17284871/",
+      "photographer": "iddea photo",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: The pilot's eye section",
+      "placeholder": true,
+      "notes": "Cropped."
+    },
+    {
+      "file": "cockpit-instrument-panel-single-engine.jpg",
+      "webp": [
+        "cockpit-instrument-panel-single-engine-1600.webp",
+        "cockpit-instrument-panel-single-engine-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/5262805/",
+      "photographer": "Daniel Torobekov",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "About: William's note (temporary, portrait slot)",
+      "placeholder": true,
+      "notes": ""
+    },
+    {
+      "file": "interior-cabin-leather-seats.jpg",
+      "webp": [
+        "interior-cabin-leather-seats-1600.webp",
+        "interior-cabin-leather-seats-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/20562278/",
+      "photographer": "Katie Cerami",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: Interior detail card. Services: Interior detail block",
+      "placeholder": true,
+      "notes": ""
+    },
+    {
+      "file": "detail-cockpit-window-water-drops.jpg",
+      "webp": [
+        "detail-cockpit-window-water-drops-1600.webp",
+        "detail-cockpit-window-water-drops-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/19861782/",
+      "photographer": "Joerg Mangelsen",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Request: left column, desktop only",
+      "placeholder": true,
+      "notes": "Cropped."
+    },
+    {
+      "file": "turboprop-nose-propeller-ramp.jpg",
+      "webp": [
+        "turboprop-nose-propeller-ramp-1600.webp",
+        "turboprop-nose-propeller-ramp-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/37634383/",
+      "photographer": "Joerg Mangelsen",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: Exterior wash card. Services: Exterior wash block",
+      "placeholder": true,
+      "notes": "Cropped to remove the manufacturer badge."
+    },
+    {
+      "file": "hangar-twin-turboprop-polished-floor.jpg",
+      "webp": [
+        "hangar-twin-turboprop-polished-floor-1600.webp",
+        "hangar-twin-turboprop-polished-floor-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/20425755/",
+      "photographer": "Joao Henrique Damiao de Oliveira",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: Full aircraft detail card. Services: Full aircraft detail block",
+      "placeholder": true,
+      "notes": ""
+    },
+    {
+      "file": "light-jet-nose-on-taxiway.jpg",
+      "webp": [
+        "light-jet-nose-on-taxiway-1600.webp",
+        "light-jet-nose-on-taxiway-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/7739666/",
+      "photographer": "Alisson Michel",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Home: Ceramic coating card",
+      "placeholder": true,
+      "notes": ""
+    },
+    {
+      "file": "large-jet-engine-tail-detail.jpg",
+      "webp": [
+        "large-jet-engine-tail-detail-1600.webp",
+        "large-jet-engine-tail-detail-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/32500302/",
+      "photographer": "David Luyeye",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "Services: Ceramic coating block",
+      "placeholder": true,
+      "notes": "Cropped to remove nacelle lettering and a background hangar sign."
+    },
+    {
+      "file": "hand-microfiber-wipe.jpg",
+      "webp": [
+        "hand-microfiber-wipe-1600.webp",
+        "hand-microfiber-wipe-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/11370616/",
+      "photographer": "Towfiqu barbhuiya",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "About: Aircraft only section",
+      "placeholder": true,
+      "notes": "Generic surface, not an aircraft. Replace first."
+    },
+    {
+      "file": "prescott-thumb-butte-winter-sky.jpg",
+      "webp": [
+        "prescott-thumb-butte-winter-sky-1600.webp",
+        "prescott-thumb-butte-winter-sky-800.webp"
+      ],
+      "source_url": "https://www.pexels.com/photo/11320508/",
+      "photographer": "Connor Gibson",
+      "license": "Pexels License",
+      "attribution_required": false,
+      "used_on": "About: wide photo band",
+      "placeholder": true,
+      "notes": "Source lists the location as Prescott, United States."
+    }
+  ],
+  "logo": {
+    "files": [
+      "aerocrest-logo.png (original, unaltered)",
+      "aerocrest-logo-transparent.png / .webp (white background removed)",
+      "aerocrest-logo-lockup.png / .webp (trimmed full lockup, footer)",
+      "aerocrest-mark.png / .webp (A mark and aircraft, header)",
+      "aerocrest-wordmark.png / .webp (AEROCREST wordmark, header)",
+      "favicon.ico, favicon-32.png, favicon-512.png, apple-touch-icon.png (A mark and swoosh only)"
+    ],
+    "source": "Supplied by the client",
+    "placeholder": false
+  }
+}
