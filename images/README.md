@@ -10,6 +10,8 @@ Every photo on the site is a stand-in. To swap one for your own:
 
 No code changes are needed beyond that.
 
+The Exterior wash, Wash & wax and Interior detail photos change with the aircraft class picker. Each of those cards lists its four photos in `data-photo-<class>` attributes, with matching `data-alt-<class>` text, in `index.html` and `services.html`. To use a different photo for a class, change the filename in that attribute.
+
 Sizes used: the hero JPG is 2400 px wide, every other JPG is 1600 px wide.
 
 The slot for a portrait of William is on `about.html`, marked with a `PORTRAIT SLOT` comment. It currently uses `cockpit-instrument-panel-single-engine.jpg`.

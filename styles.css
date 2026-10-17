@@ -556,6 +556,9 @@ main { position: relative; display: block; }
 .service-card--wide { grid-column: span 3; flex-direction: row; }
 .service-card__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--sky-haze); }
 .service-card__media img { width: 100%; height: 100%; object-fit: cover; }
+.service-card__media img,
+.service-block__media img { transition: opacity 0.18s var(--ease); }
+.is-swapping img { opacity: 0; }
 .service-card--wide .service-card__media { flex: 0 0 46%; aspect-ratio: auto; }
 .service-card__body {
   display: flex;

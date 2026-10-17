@@ -315,6 +315,53 @@ function initClassPicker() {
 
   const camel = (slug) => slug.replace(/-([a-z])/g, (m, ch) => ch.toUpperCase());
 
+  // Cards and blocks that carry one photo per class, e.g. data-photo-light-jet="file-name".
+  const photos = document.querySelectorAll("[data-photo-single-engine]");
+  const srcsetFor = (name) => "images/" + name + "-800.webp 800w, images/" + name + "-1600.webp 1600w";
+
+  function swapPhoto(picture, slug, animate) {
+    const name = picture.dataset["photo" + camel("-" + slug)];
+    const img = picture.querySelector("img");
+    const source = picture.querySelector("source");
+    if (!name || img.getAttribute("src") === "images/" + name + ".jpg") return;
+    const show = () => {
+      source.srcset = srcsetFor(name);
+      img.src = "images/" + name + ".jpg";
+      img.alt = picture.dataset["alt" + camel("-" + slug)] || "";
+    };
+    if (!animate || reducedMotion.matches) {
+      show();
+      return;
+    }
+    picture.classList.add("is-swapping");
+    window.setTimeout(() => {
+      const done = () => picture.classList.remove("is-swapping");
+      img.addEventListener("load", done, { once: true });
+      img.addEventListener("error", done, { once: true });
+      window.setTimeout(done, 1500);
+      show();
+    }, 180);
+  }
+
+  // Warm the cache the first time someone reaches for the picker, so swaps feel instant.
+  let warmed = false;
+  const warm = () => {
+    if (warmed) return;
+    warmed = true;
+    photos.forEach((picture) => {
+      const sizes = picture.querySelector("source").getAttribute("sizes");
+      Object.keys(CLASSES).forEach((slug) => {
+        const name = picture.dataset["photo" + camel("-" + slug)];
+        if (!name) return;
+        const preload = new Image();
+        preload.sizes = sizes;
+        preload.srcset = srcsetFor(name);
+      });
+    });
+  };
+  picker.addEventListener("pointerenter", warm);
+  picker.addEventListener("focusin", warm);
+
   function apply(slug, announce) {
     const key = "price" + camel(slug).replace(/^./, (ch) => ch.toUpperCase());
     const spoken = [];
@@ -328,6 +375,7 @@ function initClassPicker() {
       }
       if (amount) spoken.push(name + " from " + formatPrice(amount));
     });
+    photos.forEach((picture) => swapPhoto(picture, slug, announce));
     tables.forEach((table) => {
       table.querySelectorAll("tr[data-class]").forEach((row) => {
         row.classList.toggle("is-active", row.dataset.class === slug);
