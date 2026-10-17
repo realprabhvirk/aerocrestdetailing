@@ -137,9 +137,11 @@ function initFlightPath() {
   const pt = (x, y) => Math.round(x * 10) / 10 + "," + Math.round(y * 10) / 10;
 
   function build() {
+    // Measure main's own box. scrollHeight would include this SVG and could only ever grow.
+    svg.style.height = "0px";
     const box = main.getBoundingClientRect();
     const width = main.clientWidth;
-    const height = main.scrollHeight;
+    const height = main.offsetHeight;
     const rel = (rect) => ({
       left: rect.left - box.left,
       right: rect.right - box.left,

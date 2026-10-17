@@ -343,6 +343,8 @@ main:focus { outline: none; }
 
 /* ---------- Flight path (home) ---------- */
 main { position: relative; display: block; }
+/* Keep the flight path inside the page content so it can never add scroll below the footer. */
+main.has-flight { overflow: hidden; overflow: clip; }
 .flight-path {
   display: none;
   position: absolute;
